@@ -1,0 +1,383 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "isValid",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "blocksChecked",
+						"type": "uint256"
+					}
+				],
+				"name": "ChainVerified",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "blockIndex",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "eventType",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "severity",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "hmacHash",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "blockHash",
+						"type": "bytes32"
+					}
+				],
+				"name": "LogAdded",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_eventType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_sourceIP",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_severity",
+						"type": "string"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_hmacHash",
+						"type": "bytes32"
+					}
+				],
+				"name": "addLog",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "chain",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "blockTimestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "eventType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "sourceIP",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "severity",
+						"type": "string"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "hmacHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "prevHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "blockHash",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "chainLength",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_index",
+						"type": "uint256"
+					}
+				],
+				"name": "getBlock",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "index",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "blockTimestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "eventType",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "sourceIP",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "severity",
+								"type": "string"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "hmacHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "prevHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "blockHash",
+								"type": "bytes32"
+							}
+						],
+						"internalType": "struct SecurityLogChain.Block",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_index",
+						"type": "uint256"
+					}
+				],
+				"name": "recomputeBlockHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "seedAllLogs",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_index",
+						"type": "uint256"
+					}
+				],
+				"name": "verifyBlock",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "verifyChain",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "Designed for Remix IDE  (solidity ^0.8.19)         Deploy on:  Remix VM (Cancun) / Sepolia testnet ── ARCHITECTURE ──────────────────────────────────────────────────  Layer 1: Raw log events (SQL Injection, XSS, Brute Force, etc.)  Layer 2: HMAC-SHA256 signing  key = \"230242452779\" (off-chain)  Layer 3: This smart contract  (on-chain immutable storage)  Layer 4: verifyChain() / verifyBlock() for integrity checks ────────────────────────────────────────────────────────────────── REGISTRATION NUMBER  : 230242452779 HMAC ALGORITHM       : HMAC-SHA256 BLOCK HASH ALGORITHM : keccak256  (native Solidity)",
+			"kind": "dev",
+			"methods": {
+				"addLog(string,string,string,bytes32)": {
+					"details": "The block hash is keccak256 of          (index, timestamp, _hmacHash, prevHash).          This links every block cryptographically to its predecessor.",
+					"params": {
+						"_eventType": "Short identifier, e.g. \"SQL_INJECTION\"",
+						"_hmacHash": "HMAC-SHA256 digest computed off-chain                      using key = \"230242452779\"",
+						"_severity": "\"LOW\" | \"MEDIUM\" | \"HIGH\" | \"CRITICAL\"",
+						"_sourceIP": "Attacker source IP address string"
+					}
+				},
+				"recomputeBlockHash(uint256)": {
+					"details": "The timestamp used at mining time is stored in blockTimestamp.          We use that stored value — not block.timestamp — for recomputation."
+				},
+				"seedAllLogs()": {
+					"details": "Call this ONCE immediately after deployment.          The function is restricted to owner."
+				},
+				"verifyBlock(uint256)": {
+					"params": {
+						"_index": "Index of the block to verify (must be >= 1)."
+					}
+				},
+				"verifyChain()": {
+					"details": "NOTE: This does NOT re-compute HMAC — that must be          done off-chain (see hmac_signer.py verify_hmac()).          This function only checks the on-chain linkage."
+				}
+			},
+			"title": "SecurityLogChain",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"addLog(string,string,string,bytes32)": {
+					"notice": "Add a security log event to the chain."
+				},
+				"chainLength()": {
+					"notice": "Return total number of blocks in the chain (including genesis)."
+				},
+				"getBlock(uint256)": {
+					"notice": "Return all fields of a block by index."
+				},
+				"recomputeBlockHash(uint256)": {
+					"notice": "Re-compute a block's hash from its stored fields and          compare to the stored blockHash.          Useful to detect any storage-level corruption."
+				},
+				"seedAllLogs()": {
+					"notice": "Seed the chain with all 10 real log events.          HMAC digests were computed by hmac_signer.py using          registration number \"230242452779\" as the secret key."
+				},
+				"verifyBlock(uint256)": {
+					"notice": "Verify the linkage of a single block against its predecessor."
+				},
+				"verifyChain()": {
+					"notice": "Walk every block and confirm that each block's prevHash          matches the hash of the preceding block.          Returns true only if the entire chain is intact."
+				}
+			},
+			"notice": "Immutable blockchain ledger for security log events.         Each block stores a log entry signed with HMAC-SHA256         using the analyst's registration number (230242452779)         as the secret key.  The HMAC digest is computed off-chain         (see hmac_signer.py) and stored on-chain for verification.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/SecurityLogChain.sol": "SecurityLogChain"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/SecurityLogChain.sol": {
+			"keccak256": "0x5d8798a502a6b92de7197115d6fc891ec68078689c6887e5fd1a82d47c5d499b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b4396cc0b5587d792f6a564e4d8b0133679b89bfed22e22cb24084b30b18fab3",
+				"dweb:/ipfs/QmcLidUt8P8Bj5GQvck224kXw9n4zHSDa4htjfskeF9x5E"
+			]
+		}
+	},
+	"version": 1
+}
