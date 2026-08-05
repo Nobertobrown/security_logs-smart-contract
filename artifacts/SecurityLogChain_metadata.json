@@ -295,62 +295,13 @@
 			}
 		],
 		"devdoc": {
-			"details": "Designed for Remix IDE  (solidity ^0.8.19)         Deploy on:  Remix VM (Cancun) / Sepolia testnet ── ARCHITECTURE ──────────────────────────────────────────────────  Layer 1: Raw log events (SQL Injection, XSS, Brute Force, etc.)  Layer 2: HMAC-SHA256 signing  key = \"230242452779\" (off-chain)  Layer 3: This smart contract  (on-chain immutable storage)  Layer 4: verifyChain() / verifyBlock() for integrity checks ────────────────────────────────────────────────────────────────── REGISTRATION NUMBER  : 230242452779 HMAC ALGORITHM       : HMAC-SHA256 BLOCK HASH ALGORITHM : keccak256  (native Solidity)",
 			"kind": "dev",
-			"methods": {
-				"addLog(string,string,string,bytes32)": {
-					"details": "The block hash is keccak256 of          (index, timestamp, _hmacHash, prevHash).          This links every block cryptographically to its predecessor.",
-					"params": {
-						"_eventType": "Short identifier, e.g. \"SQL_INJECTION\"",
-						"_hmacHash": "HMAC-SHA256 digest computed off-chain                      using key = \"230242452779\"",
-						"_severity": "\"LOW\" | \"MEDIUM\" | \"HIGH\" | \"CRITICAL\"",
-						"_sourceIP": "Attacker source IP address string"
-					}
-				},
-				"recomputeBlockHash(uint256)": {
-					"details": "The timestamp used at mining time is stored in blockTimestamp.          We use that stored value — not block.timestamp — for recomputation."
-				},
-				"seedAllLogs()": {
-					"details": "Call this ONCE immediately after deployment.          The function is restricted to owner."
-				},
-				"verifyBlock(uint256)": {
-					"params": {
-						"_index": "Index of the block to verify (must be >= 1)."
-					}
-				},
-				"verifyChain()": {
-					"details": "NOTE: This does NOT re-compute HMAC — that must be          done off-chain (see hmac_signer.py verify_hmac()).          This function only checks the on-chain linkage."
-				}
-			},
-			"title": "SecurityLogChain",
+			"methods": {},
 			"version": 1
 		},
 		"userdoc": {
 			"kind": "user",
-			"methods": {
-				"addLog(string,string,string,bytes32)": {
-					"notice": "Add a security log event to the chain."
-				},
-				"chainLength()": {
-					"notice": "Return total number of blocks in the chain (including genesis)."
-				},
-				"getBlock(uint256)": {
-					"notice": "Return all fields of a block by index."
-				},
-				"recomputeBlockHash(uint256)": {
-					"notice": "Re-compute a block's hash from its stored fields and          compare to the stored blockHash.          Useful to detect any storage-level corruption."
-				},
-				"seedAllLogs()": {
-					"notice": "Seed the chain with all 10 real log events.          HMAC digests were computed by hmac_signer.py using          registration number \"230242452779\" as the secret key."
-				},
-				"verifyBlock(uint256)": {
-					"notice": "Verify the linkage of a single block against its predecessor."
-				},
-				"verifyChain()": {
-					"notice": "Walk every block and confirm that each block's prevHash          matches the hash of the preceding block.          Returns true only if the entire chain is intact."
-				}
-			},
-			"notice": "Immutable blockchain ledger for security log events.         Each block stores a log entry signed with HMAC-SHA256         using the analyst's registration number (230242452779)         as the secret key.  The HMAC digest is computed off-chain         (see hmac_signer.py) and stored on-chain for verification.",
+			"methods": {},
 			"version": 1
 		}
 	},
@@ -371,11 +322,11 @@
 	},
 	"sources": {
 		"contracts/SecurityLogChain.sol": {
-			"keccak256": "0x5d8798a502a6b92de7197115d6fc891ec68078689c6887e5fd1a82d47c5d499b",
+			"keccak256": "0x438b1b05665666d61b0eeac0183118b03322db0f8916b677516417acc603af3a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b4396cc0b5587d792f6a564e4d8b0133679b89bfed22e22cb24084b30b18fab3",
-				"dweb:/ipfs/QmcLidUt8P8Bj5GQvck224kXw9n4zHSDa4htjfskeF9x5E"
+				"bzz-raw://4fee13993eed25096ecb23bffe202b8a7266bb5210185e3420ab4a8b1df3d128",
+				"dweb:/ipfs/QmfSHtgUY8pfg4hUq1feP2G3kBMLQ7AL8U5Eu3NnVZbWRV"
 			]
 		}
 	},

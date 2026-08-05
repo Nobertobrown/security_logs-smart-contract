@@ -1,0 +1,322 @@
+{
+	"compiler": {
+		"version": "0.8.20+commit.a1b79de6"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_issuanceFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_verificationFee",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string",
+						"name": "certId",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "certHash",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "issuer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "CertificateIssued",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string",
+						"name": "certId",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "CertificateRevoked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string",
+						"name": "certId",
+						"type": "string"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "CertificateVerifiedRequest",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newIssuanceFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newVerificationFee",
+						"type": "uint256"
+					}
+				],
+				"name": "FeesUpdated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "certId",
+						"type": "string"
+					}
+				],
+				"name": "getCertificate",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "certHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "issuer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "issuedAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum BirthCertificate.Status",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "issuanceFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "certId",
+						"type": "string"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "certHash",
+						"type": "bytes32"
+					}
+				],
+				"name": "issueCertificate",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "certId",
+						"type": "string"
+					}
+				],
+				"name": "payVerificationFee",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "certId",
+						"type": "string"
+					}
+				],
+				"name": "revokeCertificate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_issuanceFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_verificationFee",
+						"type": "uint256"
+					}
+				],
+				"name": "updateFees",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "verificationFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "Educational project contract — minimal on purpose. No proxy pattern,      no multi-sig, no upgradeability. This is intentional for course scope.",
+			"kind": "dev",
+			"methods": {
+				"issueCertificate(string,bytes32)": {
+					"details": "Automatic issuance — no admin approval step, per project scope.",
+					"params": {
+						"certHash": "SHA-256 hash of the generated PDF (computed by backend)",
+						"certId": "Unique certificate identifier generated off-chain (e.g. UUID)"
+					}
+				},
+				"payVerificationFee(string)": {
+					"details": "Kept separate from getCertificate() so that reading is free (view),      while the *act* of requesting a paid verification is recorded on-chain."
+				}
+			},
+			"title": "BirthCertificate",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"getCertificate(string)": {
+					"notice": "Read a certificate's stored data. Free — no gas cost beyond the read itself."
+				},
+				"issueCertificate(string,bytes32)": {
+					"notice": "Issue a new certificate record by paying the issuance fee."
+				},
+				"payVerificationFee(string)": {
+					"notice": "Pay the verification fee. Emits an event; actual hash comparison         happens off-chain in the backend using getCertificate()."
+				}
+			},
+			"notice": "Stores hashes of issued birth certificates on-chain and lets         anyone verify a certificate's integrity by comparing hashes.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/BirthCertificate.sol": "BirthCertificate"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/BirthCertificate.sol": {
+			"keccak256": "0xa8c343d8d1a4dd12ef0577fb786225c5a0472251b432f2aa02b7fee33d32d104",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d63b8efde126f2f0926f232d1d1a0989258ea269d9cb398b810ffea3057d0393",
+				"dweb:/ipfs/QmZkF1XcMnMq37MGctp3chSKfzfwqSA9iMyR7czYXZdCu3"
+			]
+		}
+	},
+	"version": 1
+}

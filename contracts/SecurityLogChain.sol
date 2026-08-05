@@ -1,54 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-/**
- * @title  SecurityLogChain
- * @notice Immutable blockchain ledger for security log events.
- *         Each block stores a log entry signed with HMAC-SHA256
- *         using the analyst's registration number (230242452779)
- *         as the secret key.  The HMAC digest is computed off-chain
- *         (see hmac_signer.py) and stored on-chain for verification.
- *
- * @dev    Designed for Remix IDE  (solidity ^0.8.19)
- *         Deploy on:  Remix VM (Cancun) / Sepolia testnet
- *
- * ── ARCHITECTURE ──────────────────────────────────────────────────
- *  Layer 1: Raw log events (SQL Injection, XSS, Brute Force, etc.)
- *  Layer 2: HMAC-SHA256 signing  key = "230242452779" (off-chain)
- *  Layer 3: This smart contract  (on-chain immutable storage)
- *  Layer 4: verifyChain() / verifyBlock() for integrity checks
- * ──────────────────────────────────────────────────────────────────
- *
- * REGISTRATION NUMBER  : 230242452779
- * HMAC ALGORITHM       : HMAC-SHA256
- * BLOCK HASH ALGORITHM : keccak256  (native Solidity)
- */
 contract SecurityLogChain {
-    // ─────────────────────────────────────────────────────────────
-    // DATA STRUCTURES
-    // ─────────────────────────────────────────────────────────────
-
     struct Block {
-        uint256 index; // sequential block number (0 = genesis)
-        uint256 blockTimestamp; // Unix epoch when block was mined
-        string eventType; // e.g. "SQL_INJECTION", "XSS_ATTEMPT"
-        string sourceIP; // attacker's source IP (or "N/A")
-        string severity; // "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"
-        bytes32 hmacHash; // HMAC-SHA256(key=regNum, msg=logData)  — off-chain
-        bytes32 prevHash; // hash of the preceding block
-        bytes32 blockHash; // keccak256 of this block's core fields
+        uint256 index; 
+        uint256 blockTimestamp;
+        string eventType;
+        string sourceIP;
+        string severity;
+        bytes32 hmacHash;
+        bytes32 prevHash;
+        bytes32 blockHash; 
     }
-
-    // ─────────────────────────────────────────────────────────────
-    // STATE
-    // ─────────────────────────────────────────────────────────────
 
     Block[] public chain;
     address public owner;
-
-    // ─────────────────────────────────────────────────────────────
-    // EVENTS  (emitted so front-ends / explorers can index them)
-    // ─────────────────────────────────────────────────────────────
 
     event LogAdded(
         uint256 indexed blockIndex,
@@ -60,26 +26,14 @@ contract SecurityLogChain {
 
     event ChainVerified(bool isValid, uint256 blocksChecked);
 
-    // ─────────────────────────────────────────────────────────────
-    // MODIFIERS
-    // ─────────────────────────────────────────────────────────────
-
     modifier onlyOwner() {
         require(msg.sender == owner, "SecurityLogChain: caller is not owner");
         _;
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // CONSTRUCTOR — creates the genesis block
-    // ─────────────────────────────────────────────────────────────
-
     constructor() {
         owner = msg.sender;
 
-        // Genesis block: all hashes are zero
-        // The genesis block establishes the initial state of the chain and provides a known starting point for integrity verification. 
-        // It ensures that there is a block with index 0 and a defined prevHash (zero) for the first real log block to reference. 
-        // This simplifies the logic for adding new blocks and verifying the chain, as every block (including the first real log) can uniformly reference its predecessor without special cases.
         bytes32 genesisHash = keccak256(
             abi.encodePacked(
                 uint256(0),
@@ -105,22 +59,6 @@ contract SecurityLogChain {
         emit LogAdded(0, "GENESIS", "NONE", bytes32(0), genesisHash);
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // WRITE — add a new security log entry as a block
-    // ─────────────────────────────────────────────────────────────
-
-    /**
-     * @notice  Add a security log event to the chain.
-     * @param   _eventType  Short identifier, e.g. "SQL_INJECTION"
-     * @param   _sourceIP   Attacker source IP address string
-     * @param   _severity   "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"
-     * @param   _hmacHash   HMAC-SHA256 digest computed off-chain
-     *                      using key = "230242452779"
-     *
-     * @dev     The block hash is keccak256 of
-     *          (index, timestamp, _hmacHash, prevHash).
-     *          This links every block cryptographically to its predecessor.
-     */
     function addLog(
         string memory _eventType,
         string memory _sourceIP,
@@ -153,38 +91,15 @@ contract SecurityLogChain {
         emit LogAdded(newIndex, _eventType, _severity, _hmacHash, blockHash);
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // READ — retrieve a block
-    // ─────────────────────────────────────────────────────────────
-
-    /**
-     * @notice  Return all fields of a block by index.
-     */
     function getBlock(uint256 _index) public view returns (Block memory) {
         require(_index < chain.length, "Block index out of range");
         return chain[_index];
     }
 
-    /**
-     * @notice  Return total number of blocks in the chain (including genesis).
-     */
     function chainLength() public view returns (uint256) {
         return chain.length;
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // VERIFY — integrity checks
-    // ─────────────────────────────────────────────────────────────
-
-    /**
-     * @notice  Walk every block and confirm that each block's prevHash
-     *          matches the hash of the preceding block.
-     *          Returns true only if the entire chain is intact.
-     *
-     * @dev     NOTE: This does NOT re-compute HMAC — that must be
-     *          done off-chain (see hmac_signer.py verify_hmac()).
-     *          This function only checks the on-chain linkage.
-     */
     function verifyChain() public returns (bool) {
         uint256 len = chain.length;
         if (len <= 1) {
@@ -203,10 +118,6 @@ contract SecurityLogChain {
         return true;
     }
 
-    /**
-     * @notice  Verify the linkage of a single block against its predecessor.
-     * @param   _index  Index of the block to verify (must be >= 1).
-     */
     function verifyBlock(uint256 _index) public view returns (bool) {
         require(
             _index > 0 && _index < chain.length,
@@ -215,14 +126,6 @@ contract SecurityLogChain {
         return chain[_index].prevHash == chain[_index - 1].blockHash;
     }
 
-    /**
-     * @notice  Re-compute a block's hash from its stored fields and
-     *          compare to the stored blockHash.
-     *          Useful to detect any storage-level corruption.
-     *
-     * @dev     The timestamp used at mining time is stored in blockTimestamp.
-     *          We use that stored value — not block.timestamp — for recomputation.
-     */
     function recomputeBlockHash(uint256 _index) public view returns (bytes32) {
         require(_index < chain.length, "Block index out of range");
         Block memory b = chain[_index];
@@ -237,19 +140,6 @@ contract SecurityLogChain {
             );
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // BULK LOADER (convenience — add all 10 logs in one tx call
-    //             from a script or Remix "At Address" panel)
-    // ─────────────────────────────────────────────────────────────
-
-    /**
-     * @notice  Seed the chain with all 10 real log events.
-     *          HMAC digests were computed by hmac_signer.py using
-     *          registration number "230242452779" as the secret key.
-     *
-     * @dev     Call this ONCE immediately after deployment.
-     *          The function is restricted to owner.
-     */
     function seedAllLogs() external onlyOwner {
         require(chain.length == 1, "Logs already seeded");
 
